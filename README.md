@@ -2,7 +2,7 @@
 
 Plotly Dash dashboard containing graphs displaying the number of confirmed COVID-19 cases, admissions to intensive care units, and deaths due to COVID-19 in Sweden. The dashboard is based on most recently available open data shared by the Swedish Public Health Agency (Folkhälsomyndigheten). There are two filtering options: by date and by county (region).
 
-The live dashboard can be found here: ...
+The live dashboard can be found here: [c19-sweden.serve.scilifelab.se](https://c19-sweden.serve.scilifelab.se/).
 
 ## How the dashboard is built
 
