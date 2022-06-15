@@ -13,14 +13,6 @@ from datetime import datetime as dt
 import flask
 
 # Import and sort data from Folkhälsomyndigheten
-totals_df = pd.read_excel(
-    "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data",
-    sheet_name="Totalt antal per region",
-    header=0,
-    engine="openpyxl",
-    keep_default_na=False,
-)
-
 df1 = pd.read_excel(
     "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data",
     sheet_name="Veckodata Region",
