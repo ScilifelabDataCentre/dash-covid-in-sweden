@@ -14,7 +14,7 @@ import flask
 
 # Import and sort data from Folkhälsomyndigheten
 df1 = pd.read_excel(
-    "https://www.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data",
+    "assets/fhm_data.xlsx",
     sheet_name="Veckodata Region",
     header=0,
     engine="openpyxl",
@@ -69,7 +69,7 @@ tabDataSource_content = dbc.CardBody(
                 dbc.Row(
                     dbc.Col(
                         html.Div([
-                            html.P(["The visualizations in this dashboard are based on openly shared data by the Public Health Agency of Sweden (",html.A("Folkhälsomyndigheten", href="https://www.folkhalsomyndigheten.se/"),"). The data ", html.A("can be downloaded here", href="https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/statistik-och-analyser/bekraftade-fall-i-sverige/"), ". As of February 2022, these numbers are updated once a week, on Thursdays at 14:00; at this point information from the previous week is added."]),
+                            html.P(["The visualizations in this dashboard are based on openly shared data by the Public Health Agency of Sweden (",html.A("Folkhälsomyndigheten", href="https://www.folkhalsomyndigheten.se/"),") between February 2020 and March 2023. During this period, the data was shared on a weekly basis. An Excel file containing all data for this period ", html.A("can be downloaded here", href="https://www.folkhalsomyndigheten.se/smittskydd-beredskap/utbrott/aktuella-utbrott/covid-19/statistik-och-analyser/bekraftade-fall-i-sverige/"), "."]),
                             html.P(["The ", html.I("Confirmed Cases"), " plot is based on data from the SmiNet reporting system, published as ", html.I("Antal_fall_vecka"), ". The ", html.I("Intensive Care Admissions"), " plot is based on data from the Swedish Intensive Care Register's (Svenska Intensivvårdsregistret) reporting system, published as ", html.I("Antal_intensivvårdade_vecka"), ". The ", html.I("Deaths"), " plot is based on data from the SmiNet reporting system, published as ", html.I("Antal_avlidna_vecka"), ". Here, the people with laboratory-confirmed COVID-19 which died are included, regardless of the cause of death."])
                             ]),
                     )
@@ -89,11 +89,11 @@ tabDataSource_content = dbc.CardBody(
 tabPublicHealth_content = dbc.CardBody(
     [
         html.P(
-            "This dashboard visualizes the timeline of the spread of COVID-19 in Sweden: number of confirmed cases, number of people admitted to ICU units, as well as deaths with ongoing or recent confirmed COVID-19. Information displayed here is based on most recently available weekly open data shared by the Swedish Public Health Agency (Folkhälsomyndigheten). Please see the 'Data sources' tab for more information.",
+            "This dashboard visualizes the timeline of the spread of COVID-19 in Sweden: number of confirmed cases, number of people admitted to ICU units, as well as deaths with ongoing or recent confirmed COVID-19. The dashboard covers the period between February 2020 and March 2023. Information displayed here is based on data that was made at the time by the Swedish Public Health Agency (Folkhälsomyndigheten). Please see the 'Data sources' tab for more information.",
             className="card-text",
         ),
         html.P(
-            "You can select an area of interest (either Sweden as a whole, or individual counties) and focus on a specific timeframe. The 'Date' menu below can be used to select a particular timeframe to focus on, but otherwise information is shown from February 2020 (earliest available data) until the most recent update. Similarly, the 'Select County' dropdown menu can be used to focus in on a particular Swedish county (region), or Sweden as a whole (the latter is shown by default).",
+            "You can select an area of interest (either Sweden as a whole, or individual counties) and focus on a specific timeframe. The 'Date' menu below can be used to select a particular timeframe to focus on, but otherwise information is shown for the whole period for which data was shared. Similarly, the 'Select County' dropdown menu can be used to focus in on a particular Swedish county (region), or Sweden as a whole (the latter is shown by default).",
             className="card-text",
         ),
         html.P(
