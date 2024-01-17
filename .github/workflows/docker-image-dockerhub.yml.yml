@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Create and publish a Docker image to hub.docker.com
 
 on:
   push:
@@ -7,15 +7,16 @@ on:
 
 jobs:
   build:
-    if: github.repository == 'ScilifelabDataCentre/dash-covid-in-sweden'
+    if: github.repository == 'scilifelabdatacentre/dash-covid-in-sweden'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - name: Set date and time as tag
+        id: set_tag
+        run: echo "TAG=$(TZ="Europe/Stockholm" date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+      - name: Build Docker image
+        run: docker build -t scilifelabdatacentre/dash-covid-in-sweden:$TAG -f Dockerfile .
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Publish to Docker Hub
-        uses: elgohr/Publish-Docker-Github-Action@v5
-        with:
-          name: scilifelabdatacentre/dash-covid-in-sweden
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          dockerfile: Dockerfile
-          tags: "latest"
+        run: docker push scilifelabdatacentre/dash-covid-in-sweden:$TAG
