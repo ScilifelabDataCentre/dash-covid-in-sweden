@@ -1,8 +1,6 @@
 import dash
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash import dcc, html, Input, Output
 import plotly.express as px
 import plotly.graph_objects as go
 import json
@@ -31,19 +29,19 @@ df1 = df1.drop(df1[(df1.år == 2020) & (df1.veckonummer < 9)].index) # remove we
 
 # For the cases plot
 df1_fall = df1[["date", "Region", "Antal_fall_vecka"]]
-dfc_swe = df1_fall.groupby(["date"]).sum().reset_index()
+dfc_swe = df1_fall.groupby(["date"]).sum(numeric_only=True).reset_index()
 dfc_swe.insert(loc=1, column="Region", value="Sweden")
 df1_fall = pd.concat([df1_fall, dfc_swe])
 
 # for the ICU plot
 df1_intense = df1[["date", "Region", "Antal_intensivvårdade_vecka"]]
-dfi_swe = df1_intense.groupby(["date"]).sum().reset_index()
+dfi_swe = df1_intense.groupby(["date"]).sum(numeric_only=True).reset_index()
 dfi_swe.insert(loc=1, column="Region", value="Sweden")
 df1_intense = pd.concat([df1_intense, dfi_swe])
 
 # for the deaths plot
 df1_deaths = df1[["date", "Region", "Antal_avlidna_vecka"]]
-dfd_swe = df1_deaths.groupby(["date"]).sum().reset_index()
+dfd_swe = df1_deaths.groupby(["date"]).sum(numeric_only=True).reset_index()
 dfd_swe.insert(loc=1, column="Region", value="Sweden")
 df1_deaths = pd.concat([df1_deaths, dfd_swe])
 
@@ -107,7 +105,7 @@ tabPublicHealth_content = dbc.CardBody(
                             dbc.Row([
                                 html.Div([
                                     dbc.Row(
-                                        dbc.Col("Select date range", className="font-weight-bold"),
+                                        dbc.Col("Select date range", className="fw-bold"),
                                         ),
                                     dbc.Row(
                                         dbc.Col(
@@ -147,7 +145,7 @@ tabPublicHealth_content = dbc.CardBody(
                                 ),
                                 html.Div([
                                     dbc.Row(
-                                        dbc.Col("Select county (whole of Sweden shown by default)", className="font-weight-bold"),
+                                        dbc.Col("Select county (whole of Sweden shown by default)", className="fw-bold"),
                                         ),
                                     dbc.Row(
                                         dbc.Col(
@@ -216,7 +214,7 @@ app.layout = html.Div(
             html.Hr(),
             dbc.Row(
                 dbc.Col([
-                    html.P(["This dashboard was created using ", html.A("Dash framework", href="https://github.com/plotly/dash"), " (v.1.20). The source code for the current version of the dashboard is ", html.A("available on GitHub", href="https://github.com/ScilifelabDataCentre/dash-covid-in-sweden"), "."],
+                    html.P(["This dashboard was created using ", html.A("Dash framework", href="https://github.com/plotly/dash"), " (v.4.4.1). The source code for the current version of the dashboard is ", html.A("available on GitHub", href="https://github.com/ScilifelabDataCentre/dash-covid-in-sweden"), "."],
                     className="text-muted")
                     ], className="mt-4"
                 ),
@@ -373,4 +371,4 @@ def update_deaths_graph(value, start_date, end_date):
 # Server clause
 
 if __name__ == "__main__":
-    app.run_server(debug=False)
+    app.run(debug=False)
